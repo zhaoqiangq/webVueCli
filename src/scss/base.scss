@@ -1,0 +1,251 @@
+@charset "UTF-8";
+//默认颜色
+$bodercolor:red;
+$fontSize:18px;
+$fontColor: #28ff43;
+
+//清除标签的混合宏;
+html{
+  font-family:"Microsoft YaHei",'宋体',Arial,Helvetica,sans-serif;
+  font-size:12px;
+  -ms-text-size-adjust:100%;
+  -webkit-text-size-adjust:100%;
+}
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,hgroup,menu,nav,section,summary,time,mark{
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  font-weight:normal;
+}
+ul,ol{
+  list-style:none;
+}
+a{
+  text-decoration:none;
+  background-color:transparent;
+  -webkit-touch-callout:none;
+}
+img{
+  border:0;
+  -webkit-touch-callout:none;
+  vertical-align:top;
+}
+button,input,optgroup,select,textarea{
+  margin:0;
+  padding: 0;
+  line-height:normal;
+  font:inherit;
+  color:inherit;
+  outline:none;
+}
+button{
+  overflow:visible;
+}
+button,select{
+  text-transform:none;
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"]{
+  -webkit-appearance:button;
+  cursor:pointer;
+}
+button[disabled],
+input[disabled]{
+  cursor:default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner{
+  border:0;
+  padding:0;
+}
+input{
+  line-height:normal;
+  padding:0;
+}
+input[type="checkbox"],
+input[type="radio"]{
+  box-sizing:border-box;
+  padding:0;
+}
+textarea{
+  overflow:auto;
+}
+table{
+  border-collapse:collapse;
+  border-spacing:0;
+}
+td,th{
+  padding:0;
+}
+
+//rem 适配
+@mixin userem($size) {
+  $list:1242px,1140px,1280px,1024px,768px,720px,640px,540px,480px,412px,385px, 375px, 360px,320px,300px;
+  @each $i in $list{
+    @media screen and(max-width: #{$i}){
+      html{
+        font-size: 100px * ($i/$size);
+      }
+    }
+  }
+}
+@include userem(750px);
+
+//清除浮动;
+@mixin clear(){
+  *zoom:1;
+  &:after{
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    overflow: hidden;
+  }
+}
+
+//backgroundColor +  backgroundImg
+@mixin bg($color,$img:false,$position:center center,$repeat:no-repeat){
+  @if($img){
+    background: url($img)$color $repeat $position;
+  }@else{
+    background:$color;
+  }
+}
+//backgroundImg
+@mixin bgi($img:false,$position:center center,$repeat:no-repeat){
+  background: url($img)$repeat $position;
+}
+
+//border
+@mixin bd( $borderPx:1px,$color:$bodercolor,$solid:solid ) {
+  border:$borderPx $solid $color;
+}
+//border-top
+@mixin bdt( $borderPx:1px,$color:$bodercolor,$solid:solid ) {
+  border-top:$borderPx $solid $color;
+}
+//border-left
+@mixin bdl( $borderPx:1px,$color:$bodercolor,$solid:solid ) {
+  border-left:$borderPx $solid $color;
+}
+//border-right
+@mixin bdr( $borderPx:1px,$color:$bodercolor,$solid:solid ) {
+  border-right:$borderPx $solid $color;
+}
+//border-bottom
+@mixin bdb( $borderPx:1px,$color:$bodercolor,$solid:solid ) {
+  border-bottom:$borderPx $solid $color;
+}
+
+//font
+//fontSize+color
+@mixin fc($fsize:$fontSize,$fColor:$fontColor){
+  font-size: $fsize;
+  color:$fColor;
+}
+//fontSize+color+textAlign
+@mixin fct($fsize:$fontSize,$fColor:$fontColor,$text:center){
+  font-size: $fsize;
+  color:$fColor;
+  text-align: $text;
+}
+//line-height+fontSize+color
+@mixin lfc($l,$fsize:$fontSize,$fColor:$fontColor){
+  line-height:$l;
+  font-size: $fsize;
+  color:$fColor;
+}
+//超出一行....
+@mixin tofl{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+//多行显示...
+@mixin erow( $row:2 ){
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $row;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+//强制一行;
+@mixin ws( $arg:nowrap ){
+  white-space: $arg;
+}
+//首行缩进2个字
+@mixin ti( $value:2em ){
+  text-indent:$value;
+}
+
+
+
+//width & height & line-height;
+@mixin w($w){
+  width: $w;
+}
+@mixin h($h){
+  height: $h;
+}
+@mixin wh($w,$h){
+  width: $w;
+  height: $h;
+}
+@mixin whl($w,$h,$l){
+  width: $w;
+  height: $h;
+  line-height: $l;
+}
+@mixin wl($w,$l){
+  width: $w;
+  line-height: $l;
+}
+@mixin hl($h,$l){
+  height: $h;
+  line-height: $l;
+}
+
+// 透明度
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+//relative
+@mixin relative(){
+  position: relative;
+}
+//定位上下左右居中
+@mixin trbl($t:0,$r:0,$b:0,$l:0){
+  position: absolute;
+  top:$t;right: $r;bottom: $b;left: $l;
+  margin: auto;
+}
+//定位上下居中
+@mixin tb{
+  position: absolute;
+  top: 0;bottom: 0;
+  margin: auto;
+}
+//定位左右居中
+@mixin lr{
+  position: absolute;
+  right: 0;left: 0;
+  margin: auto;
+}
+
+//设置层级数;
+@mixin z( $num:1 ){
+  z-index:$num;
+}
+
+//图片上下居中
+@mixin imgcenter{
+  vertical-align:middle;
+}

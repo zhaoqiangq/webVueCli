@@ -1,0 +1,6 @@
+.aa{
+  @include h(5rem);
+  font-size: $fontSize;
+  background: url(../images/icon02.png)no-repeat;
+  @include wh(50rem,5rem);
+}
